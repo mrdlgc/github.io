@@ -1,0 +1,1107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Emre Dalgic — UX/UI Designer</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --ink:#0a0a0a;
+  --ink-m:#5a5a5a;
+  --ink-f:#aaa;
+  --paper:#FFFFFF;
+  --paper2:#f6f6f2;
+  --green:#48752C;
+  --green-l:#e8f0e2;
+  --serif:'DM Serif Display',serif;
+  --sans:'DM Sans',sans-serif;
+  --mono:'DM Mono',monospace;
+}
+html{scroll-behavior:smooth}
+body{font-family:var(--sans);background:var(--paper);color:var(--ink);overflow-x:hidden}
+
+/* ─── NAV ─── */
+nav{
+  position:fixed;top:0;left:0;right:0;z-index:200;
+  display:flex;align-items:center;justify-content:space-between;
+  padding:1rem 2.5rem;
+  background:rgba(255,255,255,0.92);backdrop-filter:blur(14px);
+  border-bottom:1px solid rgba(72,117,44,0.12);
+  opacity:0;transform:translateY(-100%);
+  transition:opacity 0.4s ease,transform 0.4s ease;
+  pointer-events:none;
+}
+nav.show{opacity:1;transform:translateY(0);pointer-events:all}
+.nav-logo{display:flex;align-items:center;gap:0.6rem;text-decoration:none}
+.nav-logo svg{height:32px;width:auto}
+.nav-links{display:flex;gap:2rem;list-style:none}
+.nav-links a{text-decoration:none;color:var(--ink-m);font-size:0.8rem;font-weight:500;letter-spacing:0.07em;text-transform:uppercase;transition:color 0.2s}
+.nav-links a:hover{color:var(--green)}
+
+/* ─── HERO / INTRO ANIMATION (white bg + Lottie) ─── */
+#intro{
+  min-height:100vh;display:flex;flex-direction:column;
+  align-items:center;justify-content:center;
+  background:#FFFFFF;position:relative;overflow:hidden;
+}
+.intro-stage{display:flex;flex-direction:column;align-items:center;gap:2.5rem;z-index:1;padding:2rem}
+#lottie-hero{
+  width:min(420px,80vw);height:auto;aspect-ratio:379.56/44.95;
+}
+.intro-tagline{
+  opacity:0;animation:fadeIn 1s ease 2.2s forwards;text-align:center;
+}
+.intro-tagline h1{
+  font-family:var(--serif);font-size:clamp(1.6rem,3.2vw,2.6rem);
+  color:var(--ink);line-height:1.1;letter-spacing:-0.02em;
+}
+.intro-tagline h1 em{font-style:italic;color:var(--green)}
+.intro-tagline p{
+  color:var(--ink-m);font-size:0.85rem;margin-top:0.85rem;
+  letter-spacing:0.04em;font-family:var(--mono);
+}
+.intro-scroll{
+  position:absolute;bottom:2rem;left:50%;transform:translateX(-50%);
+  display:flex;flex-direction:column;align-items:center;gap:0.5rem;
+  opacity:0;animation:fadeIn 1s ease 2.8s forwards;
+}
+.intro-scroll span{font-family:var(--mono);font-size:0.65rem;color:var(--green);opacity:0.55;letter-spacing:0.1em;text-transform:uppercase}
+.scroll-line{width:1px;height:50px;background:linear-gradient(to bottom,var(--green),transparent);opacity:0.5}
+
+
+/* ─── STORY SECTION ─── */
+#story{background:var(--paper);padding:0}
+.story-container{max-width:1200px;margin:0 auto}
+
+/* ─── CHAPTER ─── */
+.chapter{
+  min-height:100vh;display:grid;
+  align-items:center;padding:6rem 2.5rem;
+  position:relative;border-bottom:1px solid rgba(0,0,0,0.06);
+}
+.chapter:nth-child(even){background:var(--paper2)}
+.chapter-inner{
+  max-width:1100px;margin:0 auto;width:100%;
+  display:grid;grid-template-columns:1fr 1fr;gap:5rem;align-items:center;
+}
+.chapter-inner.reverse{direction:rtl}
+.chapter-inner.reverse>*{direction:ltr}
+.chapter-meta{display:flex;flex-direction:column;gap:0.5rem}
+.chapter-year{font-family:var(--serif);font-size:6rem;color:var(--green-l);line-height:1;letter-spacing:-0.04em;font-weight:400}
+.chapter-tag{font-family:var(--mono);font-size:0.7rem;color:var(--green);letter-spacing:0.12em;text-transform:uppercase}
+.chapter-title{font-family:var(--serif);font-size:clamp(1.8rem,3vw,2.8rem);color:var(--ink);line-height:1.15;letter-spacing:-0.02em;margin:0.5rem 0}
+.chapter-place{font-size:0.85rem;color:var(--green);font-weight:500}
+.chapter-body{color:var(--ink-m);font-size:1rem;line-height:1.8;margin:1rem 0}
+.chapter-body strong{color:var(--ink);font-weight:500}
+.chapter-pills{display:flex;flex-wrap:wrap;gap:0.4rem;margin-top:1.2rem}
+.pill{font-family:var(--mono);font-size:0.68rem;padding:0.25rem 0.65rem;background:var(--green-l);color:var(--green);letter-spacing:0.04em}
+.chapter-visual{position:relative;height:360px;display:flex;align-items:center;justify-content:center}
+.ch-card{
+  background:var(--paper);border:1px solid rgba(0,0,0,0.1);
+  padding:1.75rem;position:absolute;
+}
+.ch-card.main{width:85%;z-index:2;left:0;bottom:0}
+.ch-card.accent{width:65%;z-index:1;right:0;top:0;background:var(--ink);color:#fff;border:none}
+.ch-card.accent .ch-card-label{color:rgba(255,255,255,0.35)}
+.ch-card.green{background:var(--green);color:#fff;border:none}
+.ch-card.green .ch-card-label{color:rgba(255,255,255,0.5)}
+.ch-card-label{font-family:var(--mono);font-size:0.65rem;letter-spacing:0.1em;text-transform:uppercase;color:var(--ink-f);margin-bottom:0.6rem}
+.ch-card-title{font-family:var(--serif);font-size:1.3rem;line-height:1.2;margin-bottom:0.4rem}
+.ch-card-body{font-size:0.82rem;color:var(--ink-m);line-height:1.6}
+.accent .ch-card-body,.green .ch-card-body{color:rgba(255,255,255,0.65)}
+.ch-card-num{font-family:var(--serif);font-size:3rem;line-height:1;color:rgba(255,255,255,0.7)}
+.chapter-line{position:absolute;left:0;top:50%;width:3px;height:60%;transform:translateY(-50%);background:var(--green);opacity:0.15}
+
+/* ─── CHATBOT TRIGGER ─── */
+.chatbot-trigger{
+  position:relative;cursor:pointer;
+  display:inline-flex;align-items:center;gap:1rem;
+  margin-top:2rem;
+}
+.chatbot-hat{
+  width:56px;height:56px;border-radius:50%;
+  background:var(--ink);border:2px solid var(--green);
+  display:flex;align-items:center;justify-content:center;
+  transition:transform 0.25s,box-shadow 0.25s;flex-shrink:0;
+  position:relative;z-index:2;
+}
+.chatbot-hat:hover{transform:scale(1.1);box-shadow:0 8px 24px rgba(72,117,44,0.3)}
+.chatbot-hat svg{width:28px;height:28px}
+.chatbot-bubble{
+  background:var(--ink);color:#fff;
+  padding:0.6rem 1rem;font-size:0.8rem;
+  max-width:220px;line-height:1.4;font-family:var(--sans);
+  opacity:0;transform:translateX(-8px) scale(0.95);
+  transition:all 0.2s;pointer-events:none;
+  position:relative;
+}
+.chatbot-bubble::before{
+  content:'';position:absolute;left:-8px;top:50%;transform:translateY(-50%);
+  width:0;height:0;border-top:6px solid transparent;border-bottom:6px solid transparent;
+  border-right:8px solid var(--ink);
+}
+.chatbot-trigger:hover .chatbot-bubble{opacity:1;transform:translateX(0) scale(1)}
+.chatbot-hat-logo{
+  width:32px;height:32px;
+}
+
+/* ─── FLOATING POPUP CHAT ─── */
+#chat-popup{
+  position:fixed;z-index:999;
+  width:340px;
+  background:var(--paper);
+  border:1px solid rgba(0,0,0,0.12);
+  box-shadow:0 20px 60px rgba(0,0,0,0.18);
+  display:none;flex-direction:column;
+  overflow:hidden;
+}
+#chat-popup.open{display:flex}
+.popup-header{
+  display:flex;align-items:center;justify-content:space-between;
+  padding:0.75rem 1rem;background:var(--ink);
+  border-bottom:1px solid rgba(255,255,255,0.06);
+}
+.popup-header-left{display:flex;align-items:center;gap:0.6rem}
+.popup-hat-icon{
+  width:30px;height:30px;border-radius:50%;
+  background:rgba(255,255,255,0.08);border:1px solid #9dc47a;
+  display:flex;align-items:center;justify-content:center;flex-shrink:0;
+}
+.popup-hat-icon svg{width:18px;height:10px}
+.popup-title{font-family:var(--mono);font-size:0.7rem;color:#fff;letter-spacing:0.06em}
+.popup-subtitle{font-size:0.65rem;color:rgba(255,255,255,0.35);font-family:var(--mono)}
+.popup-close{
+  background:none;border:none;color:rgba(255,255,255,0.4);
+  font-size:1.1rem;cursor:pointer;padding:0.2rem 0.4rem;line-height:1;
+  transition:color 0.15s;
+}
+.popup-close:hover{color:#fff}
+.popup-api-bar{
+  display:flex;align-items:center;gap:0.5rem;
+  padding:0.5rem 0.75rem;
+  background:rgba(72,117,44,0.06);border-bottom:1px solid rgba(72,117,44,0.15);
+}
+.popup-api-bar label{font-family:var(--mono);font-size:0.6rem;color:var(--green);white-space:nowrap;letter-spacing:0.08em}
+.popup-api-bar input{flex:1;background:transparent;border:none;outline:none;font-family:var(--mono);font-size:0.7rem;color:var(--ink)}
+.popup-api-bar button{background:var(--green);border:none;color:#fff;padding:0.25rem 0.6rem;cursor:pointer;font-family:var(--mono);font-size:0.62rem}
+.popup-api-saved{padding:0.4rem 0.75rem;font-size:0.68rem;font-family:var(--mono);color:var(--green);border-bottom:1px solid rgba(72,117,44,0.15);background:rgba(72,117,44,0.05);display:none}
+.popup-msgs{
+  flex:1;overflow-y:auto;padding:0.9rem;
+  display:flex;flex-direction:column;gap:0.75rem;
+  scrollbar-width:thin;scrollbar-color:rgba(0,0,0,0.1) transparent;
+  height:280px;
+}
+.popup-msg{display:flex;gap:0.5rem;max-width:90%}
+.popup-msg.user{align-self:flex-end;flex-direction:row-reverse}
+.popup-msg-av{
+  width:22px;height:22px;border-radius:50%;flex-shrink:0;
+  display:flex;align-items:center;justify-content:center;
+  font-size:0.55rem;font-family:var(--mono);margin-top:2px;
+}
+.popup-msg.ai .popup-msg-av{background:var(--green);color:#fff}
+.popup-msg.user .popup-msg-av{background:var(--ink);color:#fff}
+.popup-msg-bub{padding:0.55rem 0.8rem;font-size:0.8rem;line-height:1.55}
+.popup-msg.ai .popup-msg-bub{background:var(--paper2);color:var(--ink);border:1px solid rgba(0,0,0,0.07)}
+.popup-msg.user .popup-msg-bub{background:var(--green);color:#fff}
+.popup-msg-bub p{margin:0}.popup-msg-bub p+p{margin-top:0.35rem}
+.popup-input-bar{
+  display:flex;border-top:1px solid rgba(0,0,0,0.08);
+}
+.popup-input-bar input{
+  flex:1;background:transparent;border:none;outline:none;
+  padding:0.75rem 0.85rem;font-family:var(--sans);font-size:0.82rem;color:var(--ink);
+}
+.popup-input-bar input::placeholder{color:var(--ink-f)}
+.popup-send{
+  background:var(--green);border:none;color:#fff;padding:0 1rem;
+  cursor:pointer;font-family:var(--mono);font-size:0.65rem;letter-spacing:0.08em;
+  text-transform:uppercase;transition:background 0.2s;
+}
+.popup-send:hover{background:#3a6022}
+.popup-send:disabled{background:rgba(72,117,44,0.3);cursor:default}
+.popup-typing{display:flex;gap:3px;align-items:center;padding:0.1rem 0}
+.popup-typing span{width:4px;height:4px;border-radius:50%;background:var(--ink-f);animation:dot-pulse 1.4s infinite}
+.popup-typing span:nth-child(2){animation-delay:.2s}
+.popup-typing span:nth-child(3){animation-delay:.4s}
+
+/* ─── THESIS SECTION ─── */
+#thesis{background:var(--ink);padding:6rem 2.5rem;color:#fff}
+.thesis-inner{max-width:1100px;margin:0 auto;display:grid;grid-template-columns:1fr 1fr;gap:5rem;align-items:center}
+.thesis-label{font-family:var(--mono);font-size:0.7rem;color:#9dc47a;letter-spacing:0.12em;text-transform:uppercase;margin-bottom:1rem}
+.thesis-title{font-family:var(--serif);font-size:clamp(2rem,3.5vw,3rem);color:#fff;line-height:1.1;letter-spacing:-0.02em;margin-bottom:1.5rem}
+.thesis-body{color:rgba(255,255,255,0.55);font-size:0.95rem;line-height:1.85}
+.thesis-body strong{color:#fff}
+.thesis-layers{display:flex;flex-direction:column;gap:1px;margin-top:2rem}
+.thesis-layer{
+  padding:1rem 1.25rem;border-left:2px solid transparent;
+  transition:border-color 0.2s,background 0.2s;
+  cursor:pointer;
+}
+.thesis-layer:hover{border-color:var(--green);background:rgba(72,117,44,0.08)}
+.thesis-layer-label{font-family:var(--mono);font-size:0.65rem;letter-spacing:0.1em;text-transform:uppercase;color:#9dc47a;margin-bottom:0.3rem}
+.thesis-layer-title{font-size:0.9rem;color:#fff;font-weight:500;margin-bottom:0.25rem}
+.thesis-layer-body{font-size:0.8rem;color:rgba(255,255,255,0.4);line-height:1.5}
+.thesis-visual{display:flex;flex-direction:column;gap:1rem}
+.thesis-card{
+  background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);
+  padding:1.5rem;
+}
+.thesis-card-num{font-family:var(--serif);font-size:2.5rem;color:#9dc47a;line-height:1;margin-bottom:0.5rem}
+.thesis-card-text{font-size:0.82rem;color:rgba(255,255,255,0.5)}
+
+/* ─── CHATBOT SECTION ─── */
+#chat{background:var(--paper2);padding:6rem 2.5rem;border-top:1px solid rgba(0,0,0,0.06)}
+.chat-outer{max-width:1100px;margin:0 auto;display:grid;grid-template-columns:1fr 1fr;gap:4rem;align-items:start}
+.chat-info .section-label{font-family:var(--mono);font-size:0.7rem;color:var(--green);letter-spacing:0.12em;text-transform:uppercase;margin-bottom:0.75rem}
+.chat-info h2{font-family:var(--serif);font-size:clamp(2rem,3vw,2.8rem);line-height:1.1;letter-spacing:-0.02em;margin-bottom:1rem}
+.chat-info p{color:var(--ink-m);font-size:0.95rem;line-height:1.8;max-width:44ch}
+.chat-suggestions{display:flex;flex-wrap:wrap;gap:0.5rem;margin-top:1.5rem}
+.chat-sugg{
+  border:1px solid rgba(0,0,0,0.12);background:transparent;
+  color:var(--ink-m);font-size:0.78rem;font-family:var(--sans);
+  padding:0.4rem 0.85rem;cursor:pointer;transition:all 0.2s;text-align:left;
+}
+.chat-sugg:hover{border-color:var(--green);color:var(--ink);background:var(--green-l)}
+
+.chat-window{border:1px solid rgba(0,0,0,0.1);background:var(--paper);display:flex;flex-direction:column;height:500px}
+.chat-msgs{flex:1;overflow-y:auto;padding:1.25rem;display:flex;flex-direction:column;gap:1rem;scrollbar-width:thin}
+.msg{display:flex;gap:0.6rem;max-width:88%}
+.msg.user{align-self:flex-end;flex-direction:row-reverse}
+.msg-av{width:26px;height:26px;border-radius:50%;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:0.6rem;font-family:var(--mono);margin-top:2px}
+.msg.ai .msg-av{background:var(--green);color:#fff}
+.msg.user .msg-av{background:var(--ink);color:#fff}
+.msg-bub{padding:0.7rem 0.95rem;font-size:0.88rem;line-height:1.6}
+.msg.ai .msg-bub{background:var(--paper2);color:var(--ink);border:1px solid rgba(0,0,0,0.07)}
+.msg.user .msg-bub{background:var(--green);color:#fff}
+.msg-bub p{margin:0}.msg-bub p+p{margin-top:0.4rem}
+.typing-dots{display:flex;gap:4px;align-items:center;padding:0.2rem 0}
+.typing-dots span{width:5px;height:5px;border-radius:50%;background:var(--ink-f);animation:dot-pulse 1.4s infinite}
+.typing-dots span:nth-child(2){animation-delay:.2s}
+.typing-dots span:nth-child(3){animation-delay:.4s}
+@keyframes dot-pulse{0%,80%,100%{opacity:.3;transform:scale(.8)}40%{opacity:1;transform:scale(1)}}
+
+.api-key-bar{display:flex;align-items:center;gap:0.6rem;padding:0.65rem 1rem;border-bottom:1px solid rgba(0,0,0,0.07);background:rgba(72,117,44,0.06)}
+.api-key-bar label{font-family:var(--mono);font-size:0.65rem;color:var(--green);white-space:nowrap;letter-spacing:0.08em}
+.api-key-bar input{flex:1;background:transparent;border:none;outline:none;font-family:var(--mono);font-size:0.75rem;color:var(--ink)}
+.api-key-bar button{background:var(--green);border:none;color:#fff;padding:0.3rem 0.75rem;cursor:pointer;font-family:var(--mono);font-size:0.68rem;letter-spacing:0.06em}
+.api-key-saved{padding:0.5rem 1rem;font-size:0.75rem;font-family:var(--mono);color:var(--green);border-bottom:1px solid rgba(72,117,44,0.2);background:rgba(72,117,44,0.06);display:none}
+
+.chat-input-bar{display:flex;border-top:1px solid rgba(0,0,0,0.07)}
+.chat-input-bar input{flex:1;background:transparent;border:none;outline:none;padding:0.9rem 1rem;font-family:var(--sans);font-size:0.88rem;color:var(--ink)}
+.chat-input-bar input::placeholder{color:var(--ink-f)}
+.chat-send{background:var(--green);border:none;color:#fff;padding:0 1.2rem;cursor:pointer;font-family:var(--mono);font-size:0.72rem;letter-spacing:0.08em;text-transform:uppercase;transition:background 0.2s}
+.chat-send:hover{background:#3a6022}
+.chat-send:disabled{background:rgba(72,117,44,0.3);cursor:default}
+
+/* ─── SKILLS + ABOUT ─── */
+#about{padding:6rem 2.5rem;background:var(--paper)}
+.about-inner{max-width:1100px;margin:0 auto;display:grid;grid-template-columns:1fr 1fr;gap:5rem;align-items:start}
+.section-label{font-family:var(--mono);font-size:0.7rem;color:var(--green);letter-spacing:0.12em;text-transform:uppercase;margin-bottom:0.75rem}
+.about-inner h2{font-family:var(--serif);font-size:clamp(2rem,3vw,2.8rem);line-height:1.1;letter-spacing:-0.02em;margin-bottom:1.5rem}
+.about-inner p{color:var(--ink-m);font-size:0.95rem;line-height:1.85;margin-bottom:1rem;max-width:50ch}
+.about-inner p strong{color:var(--ink);font-weight:500}
+.skills-col{}
+.skills-cat{margin-bottom:2rem}
+.skills-cat-label{font-family:var(--mono);font-size:0.65rem;letter-spacing:0.1em;text-transform:uppercase;color:var(--ink-f);margin-bottom:0.75rem;border-bottom:1px solid rgba(0,0,0,0.06);padding-bottom:0.4rem}
+.skills-grid-inner{display:grid;grid-template-columns:1fr 1fr;gap:0.35rem}
+.skill-item{display:flex;align-items:center;gap:0.4rem;font-size:0.82rem;color:var(--ink-m)}
+.skill-item::before{content:'';width:4px;height:4px;border-radius:50%;background:var(--green);flex-shrink:0}
+
+/* ─── AWARDS / REFERENCE ─── */
+#reference{padding:5rem 2.5rem;background:var(--paper2);border-top:1px solid rgba(0,0,0,0.06)}
+.ref-inner{max-width:1100px;margin:0 auto}
+.ref-inner h2{font-family:var(--serif);font-size:clamp(1.8rem,2.5vw,2.4rem);letter-spacing:-0.02em;margin-bottom:2.5rem}
+.ref-quote{
+  border-left:3px solid var(--green);padding:1.5rem 2rem;
+  background:var(--paper);margin-bottom:1.5rem;
+}
+.ref-quote-text{font-size:0.95rem;color:var(--ink-m);line-height:1.8;font-style:italic;margin-bottom:1rem}
+.ref-quote-author{font-family:var(--mono);font-size:0.72rem;color:var(--green);letter-spacing:0.06em}
+
+/* ─── FOOTER ─── */
+footer{background:var(--ink);padding:2.5rem;display:flex;align-items:center;justify-content:space-between}
+.footer-logo svg{height:18px;width:auto;filter:brightness(0) invert(1)}
+.footer-links{display:flex;gap:1.5rem}
+.footer-links a{color:rgba(255,255,255,0.3);text-decoration:none;font-size:0.75rem;font-family:var(--mono);letter-spacing:0.06em;transition:color 0.2s}
+.footer-links a:hover{color:#9dc47a}
+.footer-copy{font-size:0.7rem;color:rgba(255,255,255,0.2);font-family:var(--mono)}
+
+/* ─── ANIMATIONS ─── */
+@keyframes fadeUp{to{opacity:1;transform:translateY(0)}}
+@keyframes fadeIn{to{opacity:1}}
+.fade-in{opacity:0;transform:translateY(24px);transition:opacity 0.7s ease,transform 0.7s ease}
+.fade-in.visible{opacity:1;transform:translateY(0)}
+
+/* ─── RESPONSIVE ─── */
+@media(max-width:768px){
+  nav{padding:1rem 1.25rem}
+  .nav-links{display:none}
+  .chapter-inner,.thesis-inner,.chat-outer,.about-inner,.ref-inner{grid-template-columns:1fr}
+  .chapter-inner.reverse{direction:ltr}
+  .chapter{padding:4rem 1.25rem}
+  .chapter-visual{height:240px;margin-top:2rem}
+  #thesis,#chat,#about,#reference{padding:4rem 1.25rem}
+  footer{flex-direction:column;gap:1rem;text-align:center}
+  .footer-links{justify-content:center}
+}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav id="main-nav">
+  <a class="nav-logo" href="#">
+    <!-- P3 ed logo small -->
+    <svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg" style="height:28px;width:auto">
+      <path d="M98.8668 152.113C91.8311 152.113 85.4991 150.518 79.8705 147.328C74.3358 144.139 69.9737 139.73 66.7842 134.101C63.5947 128.379 62 121.812 62 114.401C62 106.897 63.5947 100.33 66.7842 94.7017C69.9737 89.0732 74.3358 84.7111 79.8705 81.6154C85.4991 78.4259 91.8311 76.8311 98.8668 76.8311C105.34 76.8311 111.109 78.2852 116.174 81.1932C121.334 84.1013 125.415 88.3696 128.417 93.9981C131.512 99.5328 133.06 106.334 133.06 114.401C133.06 122.375 131.559 129.176 128.557 134.805C125.555 140.433 121.475 144.749 116.315 147.75C111.25 150.659 105.433 152.113 98.8668 152.113ZM99.5704 143.248C104.824 143.248 109.514 142.075 113.642 139.73C117.863 137.291 121.146 133.914 123.492 129.598C125.931 125.189 127.15 120.124 127.15 114.401C127.15 108.585 125.931 103.52 123.492 99.2045C121.146 94.8893 117.863 91.5591 113.642 89.2139C109.514 86.7749 104.824 85.5553 99.5704 85.5553C94.4109 85.5553 89.7674 86.7749 85.6398 89.2139C81.5122 91.5591 78.2289 94.8893 75.7899 99.2045C73.3508 103.52 72.1313 108.585 72.1313 114.401C72.1313 120.124 73.3508 125.189 75.7899 129.598C78.2289 133.914 81.5122 137.291 85.6398 139.73C89.7674 142.075 94.4109 143.248 99.5704 143.248ZM127.432 151.409V129.176L128.417 114.261L127.009 99.3452V47H137V151.409H127.432Z" fill="#48752C"/>
+      <path d="M100.837 152.113C93.1445 152.113 86.3902 150.518 80.5741 147.328C74.758 144.045 70.2083 139.589 66.925 133.961C63.6417 128.238 62 121.719 62 114.401C62 107.084 63.5478 100.612 66.6435 94.9831C69.833 89.3546 74.1482 84.9456 79.5891 81.7561C85.1238 78.4728 91.3152 76.8311 98.1632 76.8311C105.105 76.8311 111.25 78.4259 116.597 81.6154C122.038 84.7111 126.306 89.1201 129.402 94.8424C132.497 100.471 134.045 106.991 134.045 114.401C134.045 114.871 133.998 115.386 133.904 115.949C133.904 116.418 133.904 116.934 133.904 117.497H69.5985V110.039H128.557L124.617 112.994C124.617 107.647 123.445 102.91 121.099 98.7824C118.848 94.561 115.752 91.2777 111.812 88.9325C107.872 86.5872 103.323 85.4146 98.1632 85.4146C93.0976 85.4146 88.5478 86.5872 84.5141 88.9325C80.4803 91.2777 77.3377 94.561 75.0863 98.7824C72.8349 103.004 71.7092 107.835 71.7092 113.276V114.824C71.7092 120.452 72.9287 125.424 75.3677 129.739C77.9006 133.961 81.3715 137.291 85.7805 139.73C90.2833 142.075 95.3959 143.248 101.118 143.248C105.621 143.248 109.795 142.45 113.642 140.856C117.582 139.261 120.959 136.822 123.773 133.538L129.402 140.011C126.118 143.951 121.991 146.953 117.019 149.017C112.141 151.081 106.747 152.113 100.837 152.113Z" fill="#48752C"/>
+    </svg>
+  </a>
+  <ul class="nav-links">
+    <li><a href="#about">About</a></li>
+    <li><a href="#story">Story</a></li>
+    <li><a href="#thesis">Thesis</a></li>
+    <li><a href="#chat">Ask Emre</a></li>
+  </ul>
+</nav>
+
+<!-- INTRO -->
+<section id="intro">
+  <div class="intro-stage">
+    <div id="lottie-hero"></div>
+    <div class="intro-tagline">
+      <h1>Architecture → Art → <em>Design</em></h1>
+      <p>// UX/UI Designer · Düsseldorf · Rhine-Waal University M.A.</p>
+    </div>
+  </div>
+  <div class="intro-scroll">
+    <div class="scroll-line"></div>
+    <span>Scroll to explore</span>
+  </div>
+</section>
+
+<!-- STORY / TIMELINE CHAPTERS -->
+<section id="story">
+  <div class="story-container">
+
+    <!-- 1: Origins / Childhood -->
+    <div class="chapter fade-in">
+      <div class="chapter-line"></div>
+      <div class="chapter-inner">
+        <div class="chapter-meta">
+          <div class="chapter-year">1995</div>
+          <div class="chapter-tag">Origins</div>
+          <h2 class="chapter-title">Born in Ankara, drawn to making things</h2>
+          <div class="chapter-place">Turkey · Early Years</div>
+          <p class="chapter-body">Growing up curious about <strong>how things are built</strong> — from buildings to images to objects. An early obsession with drawing, scale, and the way the physical world holds meaning. These instincts would later define a design career that bridges art, architecture, and technology.</p>
+          <div class="chapter-pills">
+            <span class="pill">Curiosity</span><span class="pill">Drawing</span><span class="pill">Spatial thinking</span>
+          </div>
+          <div class="chatbot-trigger" data-prompt="What shaped Emre design instincts growing up?">
+            <div class="chatbot-hat">
+              <!-- P2 chatbot hat logo -->
+              <svg width="42" height="22" viewBox="0 0 85 35" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <circle cx="62.5" cy="32.5" r="2.5" fill="#9dc47a"/>
+                <circle cx="22.5" cy="12.5" r="2.5" fill="#9dc47a"/>
+                <rect x="1.75" y="1.75" width="81.5" height="21.5" rx="10.75" stroke="#9dc47a" stroke-width="3.5"/>
+              </svg>
+            </div>
+            <div class="chatbot-bubble">Ask about Emre's childhood and early influences →</div>
+          </div>
+        </div>
+        <div class="chapter-visual">
+          <div class="ch-card main">
+            <div class="ch-card-label">Early influences</div>
+            <div class="ch-card-title">Spatial curiosity before design had a name</div>
+            <div class="ch-card-body">Architecture, proportion, and the question of why some spaces feel right — while others don't.</div>
+          </div>
+          <div class="ch-card accent">
+            <div class="ch-card-label">Origin</div>
+            <div class="ch-card-title">Ankara, Turkey</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 2: Architecture -->
+    <div class="chapter fade-in">
+      <div class="chapter-inner reverse">
+        <div class="chapter-meta">
+          <div class="chapter-year">2014</div>
+          <div class="chapter-tag">Education · Architecture</div>
+          <h2 class="chapter-title">Middle East Technical University — B.Arch.</h2>
+          <div class="chapter-place">METU · Ankara, Turkey · 2014–2020</div>
+          <p class="chapter-body">Six years of architecture training at one of Turkey's most rigorous institutions. Learning to <strong>think in systems</strong> — from structural logic to human scale. Three internships across building survey, site architecture at <strong>MESA Mesken</strong>, and design architecture at <strong>Mimarlar ve Han Tümertekin</strong>.</p>
+          <p class="chapter-body">Architecture taught precision, documentation, and the idea that every design decision carries weight. Skills that would directly transfer to UX — where structure and human needs must align.</p>
+          <div class="chapter-pills">
+            <span class="pill">B.Arch.</span><span class="pill">Technical drawing</span><span class="pill">3D modelling</span><span class="pill">Site architecture</span><span class="pill">Design sprints</span>
+          </div>
+          <div class="chatbot-trigger" data-prompt="How did Emre architecture background influence his UX design work?">
+            <div class="chatbot-hat">
+              <svg width="42" height="22" viewBox="0 0 85 35" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <circle cx="62.5" cy="32.5" r="2.5" fill="#9dc47a"/><circle cx="22.5" cy="12.5" r="2.5" fill="#9dc47a"/>
+                <rect x="1.75" y="1.75" width="81.5" height="21.5" rx="10.75" stroke="#9dc47a" stroke-width="3.5"/>
+              </svg>
+            </div>
+            <div class="chatbot-bubble">Ask how architecture shaped UX thinking →</div>
+          </div>
+        </div>
+        <div class="chapter-visual">
+          <div class="ch-card main">
+            <div class="ch-card-label">Degree</div>
+            <div class="ch-card-title">Bachelor of Architecture</div>
+            <div class="ch-card-body">Middle East Technical University — ranked among the top technical universities in the region. A rigorous 6-year program.</div>
+          </div>
+          <div class="ch-card green">
+            <div class="ch-card-label">Internships completed</div>
+            <div class="ch-card-num">3</div>
+            <div class="ch-card-body" style="color:rgba(255,255,255,0.7)">Building survey · Site architect · Design architect</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 3: HAZAN Architecture -->
+    <div class="chapter fade-in">
+      <div class="chapter-inner">
+        <div class="chapter-meta">
+          <div class="chapter-year">2020</div>
+          <div class="chapter-tag">Professional · Architecture Practice</div>
+          <h2 class="chapter-title">Architect at HAZAN Architecture</h2>
+          <div class="chapter-place">Ankara, Turkey · Oct 2020 – Oct 2021</div>
+          <p class="chapter-body">First professional role after graduation. Joined <strong>HAZAN Architecture</strong> and immediately entered the intensity of competitive design — participating in <strong>5+ design competitions</strong>, each with full-scope deliverables within tight 14-day sprints.</p>
+          <p class="chapter-body">Produced technical drawings, restoration plans, damage analysis, and 3D models. Developed the ability to <strong>deliver high-quality work under pressure</strong> — a skill that defines every professional role since.</p>
+          <div class="chapter-pills">
+            <span class="pill">Design competitions</span><span class="pill">Technical documentation</span><span class="pill">Restoration plans</span><span class="pill">Client communication</span><span class="pill">14-day sprints</span>
+          </div>
+          <div class="chatbot-trigger" data-prompt="What was Emre experience working at HAZAN Architecture?">
+            <div class="chatbot-hat">
+              <svg width="42" height="22" viewBox="0 0 85 35" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <circle cx="62.5" cy="32.5" r="2.5" fill="#9dc47a"/><circle cx="22.5" cy="12.5" r="2.5" fill="#9dc47a"/>
+                <rect x="1.75" y="1.75" width="81.5" height="21.5" rx="10.75" stroke="#9dc47a" stroke-width="3.5"/>
+              </svg>
+            </div>
+            <div class="chatbot-bubble">Ask about the architecture practice experience →</div>
+          </div>
+        </div>
+        <div class="chapter-visual">
+          <div class="ch-card main">
+            <div class="ch-card-label">Role</div>
+            <div class="ch-card-title">Architect — First professional chapter</div>
+            <div class="ch-card-body">From graduation to professional practice. Intense competition work building endurance and craft simultaneously.</div>
+          </div>
+          <div class="ch-card accent">
+            <div class="ch-card-label">Competitions entered</div>
+            <div class="ch-card-num">5+</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 4: Master's + GROHE -->
+    <div class="chapter fade-in">
+      <div class="chapter-inner reverse">
+        <div class="chapter-meta">
+          <div class="chapter-year">2022</div>
+          <div class="chapter-tag">Master's · UX/UI Career pivot</div>
+          <h2 class="chapter-title">Rhine-Waal University — M.A. Design & Interaction</h2>
+          <div class="chapter-place">Kamp-Lintfort, Germany · 2022–2026</div>
+          <p class="chapter-body">A deliberate pivot from physical space to digital experience. The Master's program at <strong>Rhine-Waal University of Applied Sciences</strong> brought together interaction design, human-centered research, and digital systems. Simultaneously working in industry.</p>
+          <p class="chapter-body">Google's UX Design Professional Certificate added a formal human-centered design framework — empathizing with users, defining pain points, ideating, prototyping, testing, and iterating.</p>
+          <div class="chapter-pills">
+            <span class="pill">Design & Interaction M.A.</span><span class="pill">Human-centered design</span><span class="pill">Google UX Certificate</span><span class="pill">Interaction design</span>
+          </div>
+          <div class="chatbot-trigger" data-prompt="Why did Emre move from architecture to UX design?">
+            <div class="chatbot-hat">
+              <svg width="42" height="22" viewBox="0 0 85 35" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <circle cx="62.5" cy="32.5" r="2.5" fill="#9dc47a"/><circle cx="22.5" cy="12.5" r="2.5" fill="#9dc47a"/>
+                <rect x="1.75" y="1.75" width="81.5" height="21.5" rx="10.75" stroke="#9dc47a" stroke-width="3.5"/>
+              </svg>
+            </div>
+            <div class="chatbot-bubble">Ask about the career pivot to UX design →</div>
+          </div>
+        </div>
+        <div class="chapter-visual">
+          <div class="ch-card main">
+            <div class="ch-card-label">Specialisation shift</div>
+            <div class="ch-card-title">Physical space → Digital experience</div>
+            <div class="ch-card-body">Architecture teaches systems thinking, constraints, and human scale. UX applies all three — just in pixels and flows.</div>
+          </div>
+          <div class="ch-card green">
+            <div class="ch-card-label">Location</div>
+            <div class="ch-card-title" style="font-size:1rem">Kamp-Lintfort → Düsseldorf</div>
+            <div class="ch-card-body" style="color:rgba(255,255,255,0.7)">Study + work, simultaneously</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 5: GROHE -->
+    <div class="chapter fade-in">
+      <div class="chapter-inner">
+        <div class="chapter-meta">
+          <div class="chapter-year">2023</div>
+          <div class="chapter-tag">Industry · UX/UI Designer</div>
+          <h2 class="chapter-title">UX/UI Designer at GROHE (LIXIL)</h2>
+          <div class="chapter-place">Düsseldorf, Germany · Sep 2023 – Present · 2+ years</div>
+          <p class="chapter-body">Working on the digital presence of one of the world's leading bathroom brand manufacturers. Designing <strong>responsive page layouts</strong> for service pages, B2C/B2B product landing and detail pages across <strong>60+ global markets</strong>.</p>
+          <p class="chapter-body">Deep cross-functional collaboration — from Figma to CMS implementation in <strong>FirstSpirit and Sitecore</strong>, asset management in CELUM, translation integration via Phrase TMS, and product data support in Hybris. Managing rollouts with Jira, bridging design and content operations at global scale.</p>
+          <div class="chapter-pills">
+            <span class="pill">Figma advanced</span><span class="pill">FirstSpirit / Sitecore</span><span class="pill">60+ markets</span><span class="pill">UX strategy</span><span class="pill">Jira</span><span class="pill">CMS integration</span><span class="pill">Global rollout</span>
+          </div>
+          <div class="chatbot-trigger" data-prompt="What does Emre do at GROHE and what has he achieved there?">
+            <div class="chatbot-hat">
+              <svg width="42" height="22" viewBox="0 0 85 35" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <circle cx="62.5" cy="32.5" r="2.5" fill="#9dc47a"/><circle cx="22.5" cy="12.5" r="2.5" fill="#9dc47a"/>
+                <rect x="1.75" y="1.75" width="81.5" height="21.5" rx="10.75" stroke="#9dc47a" stroke-width="3.5"/>
+              </svg>
+            </div>
+            <div class="chatbot-bubble">Ask about the GROHE UX role →</div>
+          </div>
+        </div>
+        <div class="chapter-visual">
+          <div class="ch-card main">
+            <div class="ch-card-label">Current role</div>
+            <div class="ch-card-title">UX/UI Designer — GROHE (LIXIL)</div>
+            <div class="ch-card-body">Global scale UX: responsive layouts, CMS integration, multi-market rollouts. Where design meets operations.</div>
+          </div>
+          <div class="ch-card green">
+            <div class="ch-card-label">Global reach</div>
+            <div class="ch-card-num">60+</div>
+            <div class="ch-card-body" style="color:rgba(255,255,255,0.7)">Countries supported in rollout</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- THESIS SECTION -->
+<section id="thesis">
+  <div class="thesis-inner fade-in">
+    <div>
+      <div class="thesis-label">Master's Thesis · 2026</div>
+      <h2 class="thesis-title">Designing Multimodal Chatbot Interactions for Museum Schloss Moyland</h2>
+      <p class="thesis-body">The thesis investigates how a chatbot can help museum visitors understand <strong>Joseph Beuys' controversial relationship to National Socialism</strong> through historical empathy and multimodal dialogical interaction.</p>
+      <p class="thesis-body" style="margin-top:1rem">Supervised by <strong>Prof. Dr.-Ing. Ido Iurgel</strong> and <strong>Prof. Nicolas Markwald</strong> at Hochschule Rhein-Waal. A full research project combining museum pedagogy, AI interaction design, object-based learning, and UX prototyping.</p>
+      <div class="thesis-layers">
+        <div class="thesis-layer">
+          <div class="thesis-layer-label">Layer 01</div>
+          <div class="thesis-layer-title">Object Based Chat — Structured Dialog with Flexible Layers</div>
+          <div class="thesis-layer-body">Visitors select an archival object (letter, photograph, document) and receive guided history, biography, and expert opinion layers — switchable, non-linear, user-controlled.</div>
+        </div>
+        <div class="thesis-layer">
+          <div class="thesis-layer-label">Layer 02</div>
+          <div class="thesis-layer-title">Open Blackboard Chat — Free Exploration Mode</div>
+          <div class="thesis-layer-body">Inspired by Beuys' blackboard talks. Unstructured space where visitors ask anything — chatbot adapts, integrating components dynamically based on the dialog direction.</div>
+        </div>
+        <div class="thesis-layer">
+          <div class="thesis-layer-label">Layer 03</div>
+          <div class="thesis-layer-title">Historical Empathy through Multimodal Design</div>
+          <div class="thesis-layer-body">Timelines, expert carousels, archival object visuals, and Beuys' own statements appear contextually — building emotional and critical engagement with a sensitive historical topic.</div>
+        </div>
+      </div>
+    </div>
+    <div class="thesis-visual">
+      <div class="thesis-card">
+        <div class="thesis-card-num">27</div>
+        <div class="thesis-card-text">Archival objects across 4 thematic stages in the Laborraum, each with layered dialog design</div>
+      </div>
+      <div class="thesis-card">
+        <div class="thesis-card-num">2</div>
+        <div class="thesis-card-text">Interaction modes: Object Based Structured Dialog + Open Blackboard Free Chat</div>
+      </div>
+      <div class="thesis-card">
+        <div class="thesis-card-num">3</div>
+        <div class="thesis-card-text">Information layers per object: Historical context → Beuys Biography → Expert opinions</div>
+      </div>
+      <div style="margin-top:0.5rem">
+        <div class="chatbot-trigger" data-prompt="Tell me about Emre thesis on the multimodal museum chatbot for Joseph Beuys">
+          <div class="chatbot-hat" style="background:rgba(255,255,255,0.08);border-color:#9dc47a">
+            <svg width="42" height="22" viewBox="0 0 85 35" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <circle cx="62.5" cy="32.5" r="2.5" fill="#9dc47a"/><circle cx="22.5" cy="12.5" r="2.5" fill="#9dc47a"/>
+              <rect x="1.75" y="1.75" width="81.5" height="21.5" rx="10.75" stroke="#9dc47a" stroke-width="3.5"/>
+            </svg>
+          </div>
+          <div class="chatbot-bubble" style="background:rgba(255,255,255,0.1);color:#fff">Ask about the thesis research →</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ABOUT / SKILLS -->
+<section id="about">
+  <div class="about-inner">
+    <div class="fade-in">
+      <div class="section-label">About</div>
+      <h2>Three years of UX. Six of architecture. A lifetime of making.</h2>
+      <p>I'm <strong>Emre Dalgic</strong>, a UX/UI designer with over three years of industry experience, currently based in Düsseldorf and open to relocating to Munich. I bridge the gap between marketing and technology — translating complex requirements into intuitive experiences that work for both business and users.</p>
+      <p>My background in architecture gives me an unusual lens for digital design: I think in <strong>systems, constraints, and human scale</strong>. That perspective shows up in how I approach information architecture, user journeys, and the invisible logic that makes interfaces feel inevitable.</p>
+      <p>I've worked across <strong>small agile teams and large-scale global corporate environments</strong> — adapting from rapid iteration to enterprise-level process.</p>
+      <p>Currently available for new opportunities. You can find me on <a href="https://www.linkedin.com/in/emre-dalgic" target="_blank" style="color:var(--green)">LinkedIn</a>, view work on <a href="https://emredalgic95.wixsite.com/my-site-1" target="_blank" style="color:var(--green)">my portfolio</a> and <a href="https://www.behance.net/emredalg" target="_blank" style="color:var(--green)">Behance</a>.</p>
+    </div>
+    <div class="skills-col fade-in" style="transition-delay:0.15s">
+      <div class="skills-cat">
+        <div class="skills-cat-label">Design Skills</div>
+        <div class="skills-grid-inner">
+          <div class="skill-item">UX Strategy</div>
+          <div class="skill-item">UI Design</div>
+          <div class="skill-item">Information Architecture</div>
+          <div class="skill-item">User Research</div>
+          <div class="skill-item">Design Systems</div>
+          <div class="skill-item">Responsive Design</div>
+          <div class="skill-item">Wireframing</div>
+          <div class="skill-item">Prototyping</div>
+          <div class="skill-item">Usability Testing</div>
+          <div class="skill-item">Design Thinking</div>
+        </div>
+      </div>
+      <div class="skills-cat">
+        <div class="skills-cat-label">Tools</div>
+        <div class="skills-grid-inner">
+          <div class="skill-item">Figma (advanced)</div>
+          <div class="skill-item">Photoshop (advanced)</div>
+          <div class="skill-item">Illustrator</div>
+          <div class="skill-item">Miro</div>
+          <div class="skill-item">FirstSpirit CMS</div>
+          <div class="skill-item">Sitecore CMS</div>
+          <div class="skill-item">Jira / Confluence</div>
+          <div class="skill-item">Notion / Monday</div>
+          <div class="skill-item">Framer</div>
+          <div class="skill-item">Wix / Wordpress</div>
+        </div>
+      </div>
+      <div class="skills-cat">
+        <div class="skills-cat-label">Languages</div>
+        <div class="skills-grid-inner">
+          <div class="skill-item">Turkish (native)</div>
+          <div class="skill-item">English (C1)</div>
+          <div class="skill-item">German (A2)</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- REFERENCE -->
+<section id="reference">
+  <div class="ref-inner fade-in">
+    <div class="section-label">Reference</div>
+    <h2>What colleagues say</h2>
+    <div class="ref-quote">
+      <div class="ref-quote-text">"Emre demonstrated a remarkable ability to balance technical precision with creative problem-solving. He played a vital role in optimizing our digital landscape, ensuring that every design was technically compatible with our CMS components, bridging the gap between high-level design concepts and functional web implementation."</div>
+      <div class="ref-quote-author">Samir Mammadov — Product Owner, Digital Platforms · LIXIL EMENA · GROHE AG, Düsseldorf</div>
+    </div>
+    <div class="ref-quote">
+      <div class="ref-quote-text">"One of his strengths was his ability to manage complex workflows during rollout phases. He acted as a key coordinator between Phrase TMS, Sitecore CMS, and Jira — ensuring that translation deliveries were accurate, localized, and synchronized with development sprints. His proactive communication style significantly reduced bottlenecks in our international rollout processes."</div>
+      <div class="ref-quote-author">Samir Mammadov — Product Owner, Digital Platforms · LIXIL EMENA · GROHE AG, Düsseldorf</div>
+    </div>
+  </div>
+</section>
+
+<!-- AI CHATBOT -->
+<section id="chat">
+  <div class="chat-outer">
+    <div class="chat-info fade-in">
+      <div class="section-label">Ask Emre</div>
+      <h2>Talk to the portfolio</h2>
+      <p>An AI that knows Emre's full story — education, work at GROHE, Master's thesis, design philosophy, and what drives him. Ask anything.</p>
+      <div class="chat-suggestions">
+        <button class="chat-sugg" onclick="fillPrompt('What is Emre\'s design process and how does his architecture background influence it?')">Design process & architecture</button>
+        <button class="chat-sugg" onclick="fillPrompt('Tell me about the GROHE UX role and what Emre works on there')">GROHE UX work</button>
+        <button class="chat-sugg" onclick="fillPrompt('What was the thesis about and why multimodal museum chatbots?')">Thesis research</button>
+        <button class="chat-sugg" onclick="fillPrompt('What kind of design problems excite Emre most?')">What excites him</button>
+        <button class="chat-sugg" onclick="fillPrompt('Is Emre open to new opportunities? What is he looking for?')">Availability & goals</button>
+        <button class="chat-sugg" onclick="fillPrompt('What tools and methods does Emre use in his UX work?')">Tools & methods</button>
+      </div>
+    </div>
+    <div class="fade-in" style="transition-delay:0.15s">
+      <div class="chat-window">
+        <div class="api-key-bar" id="api-key-bar">
+          <label>API KEY</label>
+          <input type="password" id="api-key-input" placeholder="sk-ant-..." autocomplete="off">
+          <button onclick="saveApiKey()">Save</button>
+        </div>
+        <div class="api-key-saved" id="api-key-saved">⚡ API key active — key never stored permanently</div>
+        <div class="chat-msgs" id="chat-msgs">
+          <div class="msg ai">
+            <div class="msg-av">ED</div>
+            <div class="msg-bub"><p>Hello! I'm an AI that knows Emre's full story — from his architecture degree in Ankara to his UX work at GROHE and his Master's thesis on museum chatbots. What would you like to know?</p></div>
+          </div>
+        </div>
+        <div class="chat-input-bar">
+          <input type="text" id="chat-input" placeholder="Ask about Emre's work, process, or background…" onkeydown="if(event.key==='Enter')sendMsg()">
+          <button class="chat-send" onclick="sendMsg()" id="send-btn">Send →</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <a class="nav-logo footer-logo" href="#">
+    <svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg" style="height:24px;width:auto">
+      <path d="M98.8668 152.113C91.8311 152.113 85.4991 150.518 79.8705 147.328C74.3358 144.139 69.9737 139.73 66.7842 134.101C63.5947 128.379 62 121.812 62 114.401C62 106.897 63.5947 100.33 66.7842 94.7017C69.9737 89.0732 74.3358 84.7111 79.8705 81.6154C85.4991 78.4259 91.8311 76.8311 98.8668 76.8311C105.34 76.8311 111.109 78.2852 116.174 81.1932C121.334 84.1013 125.415 88.3696 128.417 93.9981C131.512 99.5328 133.06 106.334 133.06 114.401C133.06 122.375 131.559 129.176 128.557 134.805C125.555 140.433 121.475 144.749 116.315 147.75C111.25 150.659 105.433 152.113 98.8668 152.113ZM99.5704 143.248C104.824 143.248 109.514 142.075 113.642 139.73C117.863 137.291 121.146 133.914 123.492 129.598C125.931 125.189 127.15 120.124 127.15 114.401C127.15 108.585 125.931 103.52 123.492 99.2045C121.146 94.8893 117.863 91.5591 113.642 89.2139C109.514 86.7749 104.824 85.5553 99.5704 85.5553C94.4109 85.5553 89.7674 86.7749 85.6398 89.2139C81.5122 91.5591 78.2289 94.8893 75.7899 99.2045C73.3508 103.52 72.1313 108.585 72.1313 114.401C72.1313 120.124 73.3508 125.189 75.7899 129.598C78.2289 133.914 81.5122 137.291 85.6398 139.73C89.7674 142.075 94.4109 143.248 99.5704 143.248ZM127.432 151.409V129.176L128.417 114.261L127.009 99.3452V47H137V151.409H127.432Z" fill="#fff" opacity="0.5"/>
+      <path d="M100.837 152.113C93.1445 152.113 86.3902 150.518 80.5741 147.328C74.758 144.045 70.2083 139.589 66.925 133.961C63.6417 128.238 62 121.719 62 114.401C62 107.084 63.5478 100.612 66.6435 94.9831C69.833 89.3546 74.1482 84.9456 79.5891 81.7561C85.1238 78.4728 91.3152 76.8311 98.1632 76.8311C105.105 76.8311 111.25 78.4259 116.597 81.6154C122.038 84.7111 126.306 89.1201 129.402 94.8424C132.497 100.471 134.045 106.991 134.045 114.401C134.045 114.871 133.998 115.386 133.904 115.949C133.904 116.418 133.904 116.934 133.904 117.497H69.5985V110.039H128.557L124.617 112.994C124.617 107.647 123.445 102.91 121.099 98.7824C118.848 94.561 115.752 91.2777 111.812 88.9325C107.872 86.5872 103.323 85.4146 98.1632 85.4146C93.0976 85.4146 88.5478 86.5872 84.5141 88.9325C80.4803 91.2777 77.3377 94.561 75.0863 98.7824C72.8349 103.004 71.7092 107.835 71.7092 113.276V114.824C71.7092 120.452 72.9287 125.424 75.3677 129.739C77.9006 133.961 81.3715 137.291 85.7805 139.73C90.2833 142.075 95.3959 143.248 101.118 143.248C105.621 143.248 109.795 142.45 113.642 140.856C117.582 139.261 120.959 136.822 123.773 133.538L129.402 140.011C126.118 143.951 121.991 146.953 117.019 149.017C112.141 151.081 106.747 152.113 100.837 152.113Z" fill="#fff" opacity="0.5"/>
+    </svg>
+  </a>
+  <div class="footer-links">
+    <a href="mailto:emre.dalgic.95@gmail.com">Email</a>
+    <a href="https://www.linkedin.com/in/emre-dalgic" target="_blank">LinkedIn</a>
+    <a href="https://www.behance.net/emredalg" target="_blank">Behance</a>
+    <a href="https://emredalgic95.wixsite.com/my-site-1" target="_blank">Portfolio</a>
+  </div>
+  <div class="footer-copy">© 2025 Emre Dalgic</div>
+</footer>
+
+<script>
+// ── AI SYSTEM PROMPT ──
+const SYSTEM = `You are an AI assistant embedded in Emre Dalgic's personal design portfolio website. You represent Emre authentically to potential clients, collaborators, and employers. Speak in warm first-person as if you ARE Emre.
+
+FULL PROFILE:
+Name: Emre Dalgic
+Email: emre.dalgic.95@gmail.com
+Phone: +49 179 422 29 64
+Currently based: Düsseldorf, Germany. Open to relocating to Munich.
+LinkedIn: https://www.linkedin.com/in/emre-dalgic
+Portfolio: https://emredalgic95.wixsite.com/my-site-1
+Behance: https://www.behance.net/emredalg
+
+PROFESSIONAL SUMMARY:
+Over three years of experience as a UX/UI Designer. Craft thoughtful, user-centered solutions that serve business goals and user research outcomes. Bridge the gap between marketing and technology, translating complex requirements into intuitive user experiences. Worked across small agile teams and large-scale global markets within a corporate company.
+
+CURRENT ROLE — UX/UI Designer | GROHE (LIXIL), Düsseldorf DE (hybrid), Sep 2023–present:
+- Website page design: Responsive layouts for service pages, B2C/B2B product landing and detail pages
+- UX strategy & user journey: Mapped user journeys within existing information architecture for how-to video service pages. Supported UX design and documentation (content matrix) for CMS setup across multiple pages
+- Design adaptations for system: Adapted designs to CMS components and technical requirements, collaborating with content and marketing teams for diverse markets
+- Cross-functional collaboration: CMS (FirstSpirit, Sitecore), asset management (CELUM/AMS), translations (Phrase TMS), product data (Hybris), tracking setup
+- Market rollout support: Supported website rollouts across 60+ countries — managing content, setting up pages, maintaining consistent UX across markets
+- Project management: Coordinated with stakeholders and content editors through Jira
+
+PREVIOUS ROLE — Architect | HAZAN Architecture, Ankara TR (on-site), Oct 2020–Oct 2021:
+- Participated in 5+ design competitions, delivering full-scope projects within tight 14-day sprints
+- Produced building survey drawings, restoration plans, sections, detail drawings, damage analysis, 3D modelling
+- Prepared and presented slides and poster presentations to clients
+
+EDUCATION:
+- Design and Interaction, M.A. | Rhine-Waal University of Applied Sciences (Hochschule Rhein-Waal), Kamp-Lintfort, DE | 2022–2026
+  Thesis: "Designing Multimodal Chatbot Interactions for Joseph Beuys Laborraum in Museum Schloss Moyland"
+  Supervisors: Prof. Dr.-Ing. Ido Iurgel, Prof. Nicolas Markwald
+  
+- Architecture, B.Arch. | Middle East Technical University (METU), Ankara TR | 2014–2020
+  Internships in 3 areas: Building survey drawing and material workshops (METU), Site architect (MESA Mesken), Design architect (Mimarlar ve Han Tümertekin)
+
+CERTIFICATES:
+- UX Design Professional Certificate | Google
+  Human centered design: Developed projects by empathizing with users, defining pain points, ideating solutions, creating wireframes and prototypes, testing and iterating
+
+SKILLS:
+Design: UX Strategy, UI Design, Information Architecture, User Research, Design Thinking, Design Systems, Responsive Design, Wireframing, Prototyping, Usability Testing, Collaboration, Project Management, Team Communication, AI Automation
+
+Tools:
+- Figma (advanced), Photoshop (advanced), Illustrator (intermediate), Miro (intermediate), Notion (intermediate), Monday (intermediate), Confluence (intermediate), Jira (intermediate), FirstSpirit (intermediate), Sitecore (intermediate), Wix (intermediate), Framer (elementary), Wordpress (beginner)
+
+Languages: Turkish (native), English (C1), German (A2)
+
+MASTER'S THESIS (March 2026):
+Title: "Designing Multimodal Chatbot Interactions for Joseph Beuys Laborraum in Museum Schloss Moyland"
+Institution: Hochschule Rhein-Waal, Faculty of Communication and Environment — Master of Arts, Design and Interaction
+
+Summary: Investigated how a chatbot system can assist museum visitors in understanding Joseph Beuys' controversial relationship to National Socialism through museum pedagogy to build historical empathy with multimodal dialogical interaction. Museum Schloss Moyland holds the world's most extensive collection of Beuys' works.
+
+Key design concepts:
+1. Object Based Chat (Structured Dialog with Flexible Layers): Users select one of 27 archival objects (letters, photographs, documents, artworks). Dialog structured around three layers: Historical Context → Beuys Biography → Expert Opinions. Layers are non-linear and user-switchable. History layer features a retro radio-inspired timeline 1917-1990. Biography layer shows parallel Beuys/historical timelines. Expert layer shows carousel of scholar opinions.
+
+2. Open Blackboard Chat (Free Chat): Unstructured exploration space inspired by Beuys' blackboard talks. Users can ask anything. Chatbot adapts, integrating complementary components contextually: objects carousel, Beuys' own statements and artworks, history/biography/expert layer components.
+
+Methodology: Laborraum visit, expert-guided tour with participant (Oct 30, 2025), conversational exploration with existing chatbot. Research analyzed museum pedagogy, dialogical pedagogy, object-based learning, and multimodal interaction principles.
+
+The Laborraum comprises 27 objects across 4 thematic stages (School days/training 1937-1942, Time as soldier 1943-1945, Auschwitz Memorial Competition 1957, Polentransport 1981), plus 35+ books and 15 expert interview videos.
+
+REFERENCE from GROHE:
+Samir Mammadov, Product Owner Digital Platforms LIXIL EMENA wrote: "Emre demonstrated a remarkable ability to balance technical precision with creative problem-solving. His work was instrumental in optimizing our digital landscape. He ensured every design was technically compatible with CMS components (FirstSpirit and Sitecore), bridging the gap between high-level design concepts and functional web implementation. One of his strengths was his ability to manage complex workflows during rollout phases — coordinating between Phrase TMS, Sitecore CMS, and Jira. His proactive communication style significantly reduced bottlenecks in our international rollout processes. Emre is overall a dedicated, reliable, and highly capable professional. We are confident that he will be an invaluable asset to any organization he joins."
+
+DESIGN PHILOSOPHY:
+Emre bridges the gap between marketing/business and technology. His architecture background gives him systems thinking — seeing how parts connect, how constraints create solutions, how human scale matters even at pixels. He is particularly interested in AI interface design and multimodal interactions. His thesis work is the deepest expression of this interest: designing for complex, sensitive, layered content using conversational AI.
+
+AVAILABILITY:
+Open to new full-time UX/UI designer roles, particularly in Munich or Düsseldorf. Also open to relocation within Germany. Available for freelance and collaboration discussions. Contact: emre.dalgic.95@gmail.com
+
+INSTRUCTIONS:
+- Answer warmly in first-person as Emre
+- Be specific, not generic — use real details from this profile
+- Keep answers to 2-4 short paragraphs
+- Always end with an invitation to connect or ask more
+- For salary or very personal topics, be brief and invite direct email contact
+- If asked about the Figma prototype for the thesis, mention it requires access request`;
+
+let apiKey = '';
+let popupHistory = [];
+
+// ── POPUP POSITIONING ──
+function openPopup(triggerEl, prefillText){
+  const popup = document.getElementById('chat-popup');
+  const rect = triggerEl.getBoundingClientRect();
+  const vw = window.innerWidth;
+  const vh = window.innerHeight;
+  const popW = 340;
+  const popH = 440;
+
+  // Position above the hat by default, shift left/right to stay in viewport
+  let left = rect.left + rect.width / 2 - popW / 2;
+  let top = rect.top + window.scrollY - popH - 12;
+
+  // If not enough space above, show below
+  if(rect.top < popH + 20){
+    top = rect.bottom + window.scrollY + 12;
+  }
+
+  // Clamp horizontal
+  left = Math.max(12, Math.min(left, vw - popW - 12));
+
+  popup.style.left = left + 'px';
+  popup.style.top = top + 'px';
+  popup.style.width = popW + 'px';
+  popup.classList.add('open');
+
+  if(prefillText){
+    document.getElementById('popup-input').value = prefillText;
+    document.getElementById('popup-input').focus();
+  } else {
+    document.getElementById('popup-input').focus();
+  }
+}
+
+function closePopup(){
+  document.getElementById('chat-popup').classList.remove('open');
+}
+
+function scrollToChat(text){
+  // Find which trigger was clicked — open popup anchored to it
+  // Called from chatbot-trigger onclick, 'this' not available so we use event
+  // Instead just open anchored to the bottom-right as fallback
+  const popup = document.getElementById('chat-popup');
+  const vw = window.innerWidth;
+  popup.style.left = Math.max(12, vw - 352) + 'px';
+  popup.style.top = (window.scrollY + window.innerHeight - 460) + 'px';
+  popup.classList.add('open');
+  if(text){
+    document.getElementById('popup-input').value = text;
+    setTimeout(()=>document.getElementById('popup-input').focus(), 100);
+  }
+}
+
+// ── ATTACH CLICK TO EACH HAT ──
+document.addEventListener('DOMContentLoaded', ()=>{
+  document.querySelectorAll('.chatbot-trigger').forEach(trigger => {
+    trigger.addEventListener('click', function(e){
+      e.preventDefault();
+      const prefill = this.getAttribute('data-prompt') || '';
+      openPopup(this, prefill);
+    });
+  });
+
+  // Close popup when clicking outside
+  document.addEventListener('click', function(e){
+    const popup = document.getElementById('chat-popup');
+    if(popup.classList.contains('open') && !popup.contains(e.target) && !e.target.closest('.chatbot-trigger')){
+      closePopup();
+    }
+  });
+});
+
+// ── POPUP API KEY ──
+function savePopupKey(){
+  apiKey = document.getElementById('popup-api-input').value.trim();
+  if(!apiKey) return;
+  document.getElementById('popup-api-bar').style.display='none';
+  document.getElementById('popup-api-saved').style.display='block';
+  // Also sync with bottom chat section if it exists
+  const mainInput = document.getElementById('api-key-input');
+  if(mainInput) mainInput.value = apiKey;
+}
+
+// ── POPUP MESSAGES ──
+function appendPopupMsg(role, text){
+  const c = document.getElementById('popup-msgs');
+  const d = document.createElement('div');
+  d.className = `popup-msg ${role==='assistant'?'ai':'user'}`;
+  d.innerHTML = `<div class="popup-msg-av">${role==='assistant'?'ED':'↑'}</div><div class="popup-msg-bub"><p>${text.replace(/\n/g,'</p><p>')}</p></div>`;
+  c.appendChild(d);
+  c.scrollTop = c.scrollHeight;
+}
+
+function appendPopupTyping(){
+  const c = document.getElementById('popup-msgs');
+  const d = document.createElement('div');
+  d.className='popup-msg ai';d.id='popup-typing';
+  d.innerHTML='<div class="popup-msg-av">ED</div><div class="popup-msg-bub"><div class="popup-typing"><span></span><span></span><span></span></div></div>';
+  c.appendChild(d);c.scrollTop=c.scrollHeight;
+}
+
+async function sendPopupMsg(){
+  const inp = document.getElementById('popup-input');
+  const btn = document.getElementById('popup-send');
+  const text = inp.value.trim();
+  if(!text) return;
+  if(!apiKey){
+    document.getElementById('popup-api-bar').style.display='flex';
+    document.getElementById('popup-api-input').focus();
+    return;
+  }
+  inp.value='';btn.disabled=true;
+  appendPopupMsg('user', text);
+  popupHistory.push({role:'user',content:text});
+  appendPopupTyping();
+  try{
+    const res = await fetch('https://api.anthropic.com/v1/messages',{
+      method:'POST',
+      headers:{'Content-Type':'application/json','x-api-key':apiKey,'anthropic-version':'2023-06-01','anthropic-dangerous-direct-browser-access':'true'},
+      body:JSON.stringify({model:'claude-haiku-4-5-20251001',max_tokens:500,system:SYSTEM,messages:popupHistory})
+    });
+    const data = await res.json();
+    const t = document.getElementById('popup-typing');if(t)t.remove();
+    if(data.error){appendPopupMsg('assistant','Error: '+(data.error.message||'Check your API key.'));}
+    else{
+      const reply = data.content?.[0]?.text||'Sorry, no response.';
+      popupHistory.push({role:'assistant',content:reply});
+      appendPopupMsg('assistant',reply);
+    }
+  }catch(e){
+    const t=document.getElementById('popup-typing');if(t)t.remove();
+    appendPopupMsg('assistant','Connection error. Please check your API key.');
+  }
+  btn.disabled=false;inp.focus();
+}
+
+// Also keep bottom section working
+function saveApiKey(){
+  apiKey = document.getElementById('api-key-input').value.trim();
+  if(!apiKey) return;
+  document.getElementById('api-key-bar').style.display='none';
+  document.getElementById('api-key-saved').style.display='block';
+}
+function fillPrompt(text){
+  document.getElementById('chat-input').value = text;
+  document.getElementById('chat').scrollIntoView({behavior:'smooth'});
+  setTimeout(()=>document.getElementById('chat-input').focus(),600);
+}
+function appendMsg(role,text){
+  const c = document.getElementById('chat-msgs');
+  const d = document.createElement('div');
+  d.className = `msg ${role==='assistant'?'ai':'user'}`;
+  d.innerHTML = `<div class="msg-av">${role==='assistant'?'ED':'You'}</div><div class="msg-bub"><p>${text.replace(/\n/g,'</p><p>')}</p></div>`;
+  c.appendChild(d);c.scrollTop = c.scrollHeight;
+}
+function appendTyping(){
+  const c = document.getElementById('chat-msgs');
+  const d = document.createElement('div');
+  d.className='msg ai';d.id='typing';
+  d.innerHTML='<div class="msg-av">ED</div><div class="msg-bub"><div class="typing-dots"><span></span><span></span><span></span></div></div>';
+  c.appendChild(d);c.scrollTop=c.scrollHeight;
+}
+let mainHistory=[];
+async function sendMsg(){
+  const inp=document.getElementById('chat-input');
+  const btn=document.getElementById('send-btn');
+  const text=inp.value.trim();
+  if(!text)return;
+  if(!apiKey){alert('Please enter your Anthropic API key above.');return;}
+  inp.value='';btn.disabled=true;
+  appendMsg('user',text);mainHistory.push({role:'user',content:text});appendTyping();
+  try{
+    const res=await fetch('https://api.anthropic.com/v1/messages',{method:'POST',headers:{'Content-Type':'application/json','x-api-key':apiKey,'anthropic-version':'2023-06-01','anthropic-dangerous-direct-browser-access':'true'},body:JSON.stringify({model:'claude-haiku-4-5-20251001',max_tokens:600,system:SYSTEM,messages:mainHistory})});
+    const data=await res.json();
+    const t=document.getElementById('typing');if(t)t.remove();
+    if(data.error){appendMsg('assistant','Error: '+(data.error.message||'Check your API key.'));}
+    else{const reply=data.content?.[0]?.text||'No response.';mainHistory.push({role:'assistant',content:reply});appendMsg('assistant',reply);}
+  }catch(e){const t=document.getElementById('typing');if(t)t.remove();appendMsg('assistant','Connection error.');}
+  btn.disabled=false;inp.focus();
+}
+
+// ── SCROLL ANIMATIONS ──
+const obs = new IntersectionObserver(entries=>{
+  entries.forEach(e=>{if(e.isIntersecting)e.target.classList.add('visible')});
+},{threshold:0.1});
+document.querySelectorAll('.fade-in').forEach(el=>obs.observe(el));
+
+// ── SCROLL-DRIVEN NAV (P3 logo locks in after hero) ──
+const navEl = document.getElementById('main-nav');
+const introEl = document.getElementById('intro');
+function onScroll(){
+  const heroBottom = introEl.offsetHeight * 0.6;
+  if(window.scrollY > heroBottom){ navEl.classList.add('show'); }
+  else { navEl.classList.remove('show'); }
+}
+window.addEventListener('scroll', onScroll, {passive:true});
+onScroll();
+
+// ── LOTTIE HERO (P1 → P2 morph, plays once, holds final frame) ──
+(function initLottie(){
+  function play(){
+    if(typeof lottie === 'undefined' || typeof window.LOTTIE_P1_DATA === 'undefined'){ setTimeout(play, 80); return; }
+    const anim = lottie.loadAnimation({
+      container: document.getElementById('lottie-hero'),
+      renderer: 'svg',
+      loop: false,
+      autoplay: true,
+      animationData: window.LOTTIE_P1_DATA
+    });
+    anim.addEventListener('complete', function(){
+      anim.goToAndStop(anim.totalFrames - 1, true);
+    });
+  }
+  play();
+})();
+</script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bodymovin/5.12.2/lottie.min.js"></script>
+<script>
+window.LOTTIE_P1_DATA = {"nm":"Main Scene","ddd":0,"h":44.95,"w":379.56,"meta":{"g":"LottieFiles Figma v112"},"layers":[{"ty":4,"nm":"Ellipse 19","sr":1,"st":0,"op":121,"ip":0,"hd":false,"ddd":0,"bm":0,"hasMask":false,"ao":0,"ks":{"a":{"a":0,"k":[2.5,2.5]},"s":{"a":0,"k":[100,100]},"sk":{"a":0,"k":0},"p":{"a":1,"k":[{"o":{"x":0,"y":0},"i":{"x":1,"y":1},"s":[357.08,42.45],"t":0},{"o":{"x":0,"y":0},"i":{"x":1,"y":1},"s":[357.08,42.45],"t":1},{"o":{"x":0,"y":0},"i":{"x":1,"y":1},"s":[357.08,42.45],"t":60},{"o":{"x":0,"y":0},"i":{"x":1,"y":1},"s":[357.08,42.45],"t":61},{"s":[209.5,42.58],"t":118},{"s":[209.5,42.58],"t":119},{"s":[209.5,42.58],"t":120}]},"r":{"a":0,"k":0},"sa":{"a":0,"k":0},"o":{"a":0,"k":100}},"shapes":[{"ty":"sh","bm":0,"hd":false,"nm":"","d":1,"ks":{"a":0,"k":{"c":true,"i":[[0,0],[1.38,0],[0,1.38],[-1.38,0],[0,-1.38]],"o":[[0,1.38],[-1.38,0],[0,-1.38],[1.38,0],[0,0]],"v":[[4.99,2.5],[2.5,4.99],[0,2.5],[2.5,0],[4.99,2.5]]}}},{"ty":"fl","bm":0,"hd":false,"nm":"","c":{"a":0,"k":[0.2824,0.4589,0.1726]},"r":1,"o":{"a":0,"k":100}}],"ind":1},{"ty":4,"nm":"Ellipse 18","sr":1,"st":0,"op":121,"ip":0,"hd":false,"ddd":0,"bm":0,"hasMask":false,"ao":0,"ks":{"a":{"a":0,"k":[2.5,2.5]},"s":{"a":0,"k":[100,100]},"sk":{"a":0,"k":0},"p":{"a":1,"k":[{"o":{"x":0,"y":0},"i":{"x":1,"y":1},"s":[22.47,22.47],"t":0},{"o":{"x":0,"y":0},"i":{"x":1,"y":1},"s":[22.47,22.47],"t":1},{"o":{"x":0,"y":0},"i":{"x":1,"y":1},"s":[22.47,22.47],"t":60},{"o":{"x":0,"y":0},"i":{"x":1,"y":1},"s":[22.47,22.47],"t":61},{"s":[169.5,22.6],"t":118},{"s":[169.5,22.6],"t":119},{"s":[169.5,22.6],"t":120}]},"r":{"a":0,"k":0},"sa":{"a":0,"k":0},"o":{"a":0,"k":100}},"shapes":[{"ty":"sh","bm":0,"hd":false,"nm":"","d":1,"ks":{"a":0,"k":{"c":true,"i":[[0,0],[1.38,0],[0,1.38],[-1.38,0],[0,-1.38]],"o":[[0,1.38],[-1.38,0],[0,-1.38],[1.38,0],[0,0]],"v":[[4.99,2.5],[2.5,4.99],[0,2.5],[2.5,0],[4.99,2.5]]}}},{"ty":"fl","bm":0,"hd":false,"nm":"","c":{"a":0,"k":[0.2824,0.4589,0.1726]},"r":1,"o":{"a":0,"k":100}}],"ind":2},{"ty":4,"nm":"mre dalgi","sr":1,"st":0,"op":121,"ip":0,"hd":false,"ddd":0,"bm":0,"hasMask":false,"ao":0,"ks":{"a":{"a":0,"k":[105.5,17.5]},"s":{"a":0,"k":[100,100]},"sk":{"a":0,"k":0},"p":{"a":0,"k":[190.4,17.5]},"r":{"a":0,"k":0},"sa":{"a":0,"k":0},"o":{"a":1,"k":[{"o":{"x":0,"y":0},"i":{"x":1,"y":1},"s":[100],"t":0},{"o":{"x":0,"y":0},"i":{"x":1,"y":1},"s":[100],"t":1},{"s":[0],"t":60},{"s":[0],"t":61}]}},"shapes":[{"ty":"sh","bm":0,"hd":false,"nm":"","d":1,"ks":{"a":0,"k":{"c":true,"i":[[0,0],[0,0],[0,0],[0,0],[0,0],[-1.76,1.07],[-2.43,0],[-1.8,-1.3],[-0.53,-2.56],[0,0],[-1.93,1.3],[-2.73,0],[-1.56,-0.83],[-0.87,-1.66],[0,-2.53],[0,0],[0,0],[0,0],[1.33,1.4],[2.4,0],[1.33,-0.77],[0.73,-1.43],[0,-2],[0,0],[0,0],[0,0],[1.33,1.4],[2.4,0],[1.33,-0.77],[0.73,-1.43],[0,-2],[0,0],[0,0]],"o":[[0,0],[0,0],[0,0],[0,0],[0.8,-1.9],[1.8,-1.1],[2.56,0],[1.8,1.27],[0,0],[0.77,-2.13],[1.96,-1.33],[2.13,0],[1.6,0.8],[0.9,1.66],[0,0],[0,0],[0,0],[0,-2.76],[-1.3,-1.43],[-1.8,0],[-1.3,0.73],[-0.7,1.4],[0,0],[0,0],[0,0],[0,-2.76],[-1.33,-1.43],[-1.76,0],[-1.33,0.73],[-0.7,1.4],[0,0],[0,0],[0,0]],"v":[[4.94,35],[4.94,8.78],[8.34,8.78],[8.34,15.87],[7.79,14.62],[11.64,10.18],[17.98,8.53],[24.52,10.48],[28.02,16.22],[26.62,15.67],[30.66,10.53],[37.71,8.53],[43.25,9.78],[46.95,13.48],[48.29,19.77],[48.29,35],[44.75,35],[44.75,20.12],[42.75,13.87],[37.21,11.73],[32.51,12.88],[29.47,16.12],[28.42,21.22],[28.42,35],[24.87,35],[24.87,20.12],[22.87,13.87],[17.28,11.73],[12.64,12.88],[9.54,16.12],[8.49,21.22],[8.49,35],[4.94,35]]}}},{"ty":"sh","bm":0,"hd":false,"nm":"","d":1,"ks":{"a":0,"k":{"c":true,"i":[[0,0],[0,0],[0,0],[0,0],[0,0],[-1.73,1.03],[-2.56,0],[0,0],[0.13,0],[0.13,0],[1.56,-1.7],[0,-3.1],[0,0],[0,0]],"o":[[0,0],[0,0],[0,0],[0,0],[0.73,-2],[1.73,-1.07],[0,0],[-0.13,0],[-0.13,-0.03],[-2.76,0],[-1.56,1.66],[0,0],[0,0],[0,0]],"v":[[53.17,35],[53.17,8.78],[56.56,8.78],[56.56,15.92],[56.21,14.67],[59.91,10.13],[66.35,8.53],[66.35,11.98],[65.95,11.98],[65.55,11.93],[59.06,14.47],[56.71,21.62],[56.71,35],[53.17,35]]}}},{"ty":"sh","bm":0,"hd":false,"nm":"","d":1,"ks":{"a":0,"k":{"c":true,"i":[[0,0],[2.06,1.13],[1.17,2],[0,2.6],[-1.1,2],[-1.93,1.13],[-2.43,0],[-1.9,-1.13],[-1.1,-2.03],[0,-2.63],[0.03,-0.2],[0,-0.2],[0,0],[0,0],[0,0],[0,0],[0.83,1.47],[1.4,0.83],[1.83,0],[1.43,-0.83],[0.8,-1.5],[0,-1.93],[0,0],[-0.87,-1.53],[-1.56,-0.87],[-2.03,0],[-1.37,0.57],[-1,1.17],[0,0],[1.76,-0.73],[2.1,0]],"o":[[-2.73,0],[-2.06,-1.17],[-1.17,-2.03],[0,-2.6],[1.13,-2],[1.96,-1.17],[2.46,0],[1.93,1.1],[1.1,2],[0,0.17],[0,0.17],[0,0],[0,0],[0,0],[0,0],[0,-1.9],[-0.8,-1.5],[-1.4,-0.83],[-1.8,0],[-1.43,0.83],[-0.8,1.5],[0,0],[0,2],[0.9,1.5],[1.6,0.83],[1.6,0],[1.4,-0.57],[0,0],[-1.17,1.4],[-1.73,0.73],[0,0]],"v":[[78.97,35.25],[71.78,33.55],[66.93,28.81],[65.18,21.87],[66.83,14.97],[71.43,10.28],[78.02,8.53],[84.56,10.23],[89.11,14.92],[90.75,21.87],[90.71,22.41],[90.71,22.96],[67.88,22.96],[67.88,20.32],[88.81,20.32],[87.41,21.37],[86.16,16.32],[82.86,12.83],[78.02,11.58],[73.18,12.83],[69.83,16.32],[68.63,21.47],[68.63,22.02],[69.93,27.31],[73.62,30.85],[79.07,32.1],[83.51,31.25],[87.11,28.66],[89.11,30.95],[84.71,34.15],[78.97,35.25]]}}},{"ty":"sh","bm":0,"hd":false,"nm":"","d":1,"ks":{"a":0,"k":{"c":true,"i":[[0,0],[2,1.13],[1.13,2],[0,2.63],[-1.13,2],[-1.96,1.1],[-2.5,0],[-1.8,-1.03],[-1.07,-2],[0,-2.86],[1.06,-2],[1.83,-1.07],[2.33,0]],"o":[[-2.5,0],[-1.96,-1.13],[-1.13,-2.03],[0,-2.66],[1.13,-2],[2,-1.13],[2.3,0],[1.83,1.03],[1.1,1.96],[0,2.83],[-1.07,2],[-1.8,1.03],[0,0]],"v":[[120.32,35.25],[113.58,33.55],[108.93,28.86],[107.23,21.87],[108.93,14.87],[113.58,10.23],[120.32,8.53],[126.46,10.08],[130.81,14.62],[132.45,21.87],[130.86,29.11],[126.51,33.7],[120.32,35.25]]}}},{"ty":"sh","bm":0,"hd":false,"nm":"","d":1,"ks":{"a":0,"k":{"c":true,"i":[[0,0],[-1.47,0.83],[-0.83,1.53],[0,2.03],[0.87,1.53],[1.5,0.83],[1.86,0],[1.46,-0.87],[0.86,-1.53],[0,-2.06],[-0.87,-1.56],[-1.46,-0.87],[-1.83,0]],"o":[[1.86,0],[1.5,-0.87],[0.87,-1.56],[0,-2.06],[-0.83,-1.53],[-1.47,-0.87],[-1.83,0],[-1.46,0.83],[-0.87,1.53],[0,2.03],[0.86,1.53],[1.46,0.83],[0,0]],"v":[[120.57,32.1],[125.56,30.85],[129.06,27.26],[130.36,21.87],[129.06,16.47],[125.56,12.93],[120.57,11.63],[115.62,12.93],[112.13,16.47],[110.83,21.87],[112.13,27.26],[115.62,30.85],[120.57,32.1]]}}},{"ty":"sh","bm":0,"hd":false,"nm":"","d":1,"ks":{"a":0,"k":{"c":true,"i":[[0,0],[0,0],[0,0],[0,0],[0,0],[0,0],[0,0],[0,0]],"o":[[0,0],[0,0],[0,0],[0,0],[0,0],[0,0],[0,0],[0,0]],"v":[[130.46,35],[130.46,27.11],[130.81,21.82],[130.31,16.52],[130.31,-2.06],[133.85,-2.06],[133.85,35],[130.46,35]]}}},{"ty":"sh","bm":0,"hd":false,"nm":"","d":1,"ks":{"a":0,"k":{"c":true,"i":[[0,0],[0,0],[0,0],[0,0],[1.26,1.2],[2.46,0],[1.53,-0.57],[1.06,-0.93],[0,0],[-1.86,0.6],[-2.06,0],[-1.83,-1.7],[0,-3.43],[0,0],[0,0]],"o":[[0,0],[0,0],[0,0],[0,-2.23],[-1.23,-1.2],[-1.7,0],[-1.53,0.57],[0,0],[1.33,-1.13],[1.87,-0.63],[3.4,0],[1.86,1.66],[0,0],[0,0],[0,0]],"v":[[155.41,35],[155.41,29.21],[155.26,28.26],[155.26,18.57],[153.37,13.43],[147.82,11.63],[142.98,12.48],[139.08,14.72],[137.49,12.08],[142.28,9.48],[148.17,8.53],[156.01,11.08],[158.81,18.72],[158.81,35],[155.41,35]]}}},{"ty":"sh","bm":0,"hd":false,"nm":"","d":1,"ks":{"a":0,"k":{"c":true,"i":[[0,0],[1.47,0.63],[0.77,1.13],[0,1.5],[-0.63,1.1],[-1.47,0.67],[-2.5,0],[0,0],[0,0],[0,0],[1,-0.9],[0,-1.33],[-1.16,-0.9],[-2.1,0],[-1.43,0.9],[-0.67,1.73],[0,0],[1.66,-1.03],[2.5,0]],"o":[[-1.96,0],[-1.43,-0.67],[-0.77,-1.17],[0,-1.36],[0.67,-1.13],[1.5,-0.7],[0,0],[0,0],[0,0],[-2.53,0],[-0.97,0.9],[0,1.5],[1.17,0.9],[2,0],[1.46,-0.93],[0,0],[-0.67,1.73],[-1.63,1.03],[0,0]],"v":[[146.37,35.25],[141.23,34.3],[137.93,31.6],[136.79,27.61],[137.73,23.91],[140.93,21.22],[146.92,20.17],[155.96,20.17],[155.96,22.81],[147.02,22.81],[141.73,24.16],[140.28,27.51],[142.03,31.1],[146.92,32.45],[152.07,31.1],[155.26,27.11],[156.06,29.56],[152.57,33.7],[146.37,35.25]]}}},{"ty":"sh","bm":0,"hd":false,"nm":"","d":1,"ks":{"a":0,"k":{"c":true,"i":[[0,0],[0,0],[0,0],[0,0],[0,0]],"o":[[0,0],[0,0],[0,0],[0,0],[0,0]],"v":[[163.7,35],[163.7,-2.06],[167.24,-2.06],[167.24,35],[163.7,35]]}}},{"ty":"sh","bm":0,"hd":false,"nm":"","d":1,"ks":{"a":0,"k":{"c":true,"i":[[0,0],[2.2,0.7],[1.37,1.3],[0,0],[-1.8,-0.63],[-2.03,0],[-1.56,1.56],[0,3.26],[0,0],[0,0],[0,0],[0,0],[0,0],[0,0],[2.23,-2.1],[4.33,0]],"o":[[-2.4,0],[-2.2,-0.7],[0,0],[1.23,1.1],[1.83,0.67],[3.33,0],[1.56,-1.53],[0,0],[0,0],[0,0],[0,0],[0,0],[0,0],[0,4.53],[-2.2,2.13],[0,0]],"v":[[183.55,44.94],[176.66,43.89],[171.32,40.89],[173.11,38.2],[177.66,40.79],[183.45,41.79],[190.79,39.44],[193.14,32.25],[193.14,25.71],[193.64,21.22],[193.29,16.72],[193.29,8.78],[196.69,8.78],[196.69,31.8],[193.34,41.74],[183.55,44.94]]}}},{"ty":"sh","bm":0,"hd":false,"nm":"","d":1,"ks":{"a":0,"k":{"c":true,"i":[[0,0],[2,1.07],[1.17,1.93],[0,2.5],[-1.13,1.9],[-2,1.07],[-2.5,0],[-1.86,-0.97],[-1.1,-1.9],[0,-2.73],[1.1,-1.9],[1.87,-1],[2.33,0]],"o":[[-2.5,0],[-2,-1.1],[-1.13,-1.93],[0,-2.5],[1.17,-1.93],[2,-1.07],[2.33,0],[1.87,0.97],[1.1,1.9],[0,2.73],[-1.1,1.9],[-1.86,1],[0,0]],"v":[[182.9,34],[176.16,32.4],[171.42,27.86],[169.72,21.22],[171.42,14.62],[176.16,10.13],[182.9,8.53],[189.19,9.98],[193.64,14.27],[195.29,21.22],[193.64,28.16],[189.19,32.5],[182.9,34]]}}},{"ty":"sh","bm":0,"hd":false,"nm":"","d":1,"ks":{"a":0,"k":{"c":true,"i":[[0,0],[-1.5,0.8],[-0.87,1.43],[0,1.9],[0.87,1.43],[1.5,0.8],[1.93,0],[1.53,-0.83],[0.87,-1.43],[0,-1.9],[-0.83,-1.46],[-1.5,-0.83],[-1.9,0]],"o":[[1.93,0],[1.5,-0.83],[0.87,-1.46],[0,-1.9],[-0.87,-1.43],[-1.5,-0.83],[-1.9,0],[-1.5,0.8],[-0.83,1.43],[0,1.9],[0.87,1.43],[1.53,0.8],[0,0]],"v":[[183.25,30.85],[188.4,29.66],[191.94,26.26],[193.24,21.22],[191.94,16.22],[188.4,12.88],[183.25,11.63],[178.11,12.88],[174.56,16.22],[173.31,21.22],[174.56,26.26],[178.11,29.66],[183.25,30.85]]}}},{"ty":"sh","bm":0,"hd":false,"nm":"","d":1,"ks":{"a":0,"k":{"c":true,"i":[[0,0],[0,0],[0,0],[0,0],[0,0]],"o":[[0,0],[0,0],[0,0],[0,0],[0,0]],"v":[[201.81,35],[201.81,8.78],[205.35,8.78],[205.35,35],[201.81,35]]}}},{"ty":"sh","bm":0,"hd":false,"nm":"","d":1,"ks":{"a":0,"k":{"c":true,"i":[[0,0],[0.5,0.5],[0,0.7],[-0.5,0.47],[-0.73,0],[-0.5,-0.47],[0,-0.7],[0.5,-0.5],[0.77,0]],"o":[[-0.73,0],[-0.5,-0.5],[0,-0.7],[0.5,-0.5],[0.73,0],[0.5,0.47],[0,0.73],[-0.47,0.5],[0,0]],"v":[[203.61,2.99],[201.76,2.24],[201.01,0.44],[201.76,-1.31],[203.61,-2.06],[205.45,-1.36],[206.2,0.39],[205.45,2.24],[203.61,2.99]]}}},{"ty":"fl","bm":0,"hd":false,"nm":"","c":{"a":0,"k":[0.2824,0.4589,0.1726]},"r":1,"o":{"a":0,"k":100}}],"ind":3},{"ty":4,"nm":"Rectangle 5","sr":1,"st":0,"op":121,"ip":0,"hd":false,"ddd":0,"bm":0,"hasMask":false,"ao":0,"ks":{"a":{"a":0,"k":[114.87,2.5]},"s":{"a":0,"k":[100,100]},"sk":{"a":0,"k":0},"p":{"a":0,"k":[189.78,32.46]},"r":{"a":0,"k":0},"sa":{"a":0,"k":0},"o":{"a":1,"k":[{"o":{"x":0,"y":0},"i":{"x":1,"y":1},"s":[100],"t":0},{"o":{"x":0,"y":0},"i":{"x":1,"y":1},"s":[100],"t":1},{"s":[0],"t":60},{"s":[0],"t":61}]}},"shapes":[{"ty":"sh","bm":0,"hd":false,"nm":"","d":1,"ks":{"a":0,"k":{"c":true,"i":[[0,-0.01],[0,0],[0.01,0],[0,0],[0,0.01],[0,0],[-0.01,0],[0,0]],"o":[[0,0],[0,0.01],[0,0],[-0.01,0],[0,0],[0,-0.01],[0,0],[0.01,0]],"v":[[229.73,0.01],[229.73,4.98],[229.72,4.99],[0.01,4.99],[0,4.98],[0,0.01],[0.01,0],[229.72,0]]}}},{"ty":"fl","bm":0,"hd":false,"nm":"","c":{"a":0,"k":[1,1,1]},"r":1,"o":{"a":0,"k":100}}],"ind":4},{"ty":4,"nm":"Rectangle 4","sr":1,"st":0,"op":121,"ip":0,"hd":false,"ddd":0,"bm":0,"hasMask":false,"ao":0,"ks":{"a":{"a":0,"k":[114.87,2.5]},"s":{"a":0,"k":[100,100]},"sk":{"a":0,"k":0},"p":{"a":0,"k":[189.78,12.49]},"r":{"a":0,"k":0},"sa":{"a":0,"k":0},"o":{"a":1,"k":[{"o":{"x":0,"y":0},"i":{"x":1,"y":1},"s":[100],"t":0},{"o":{"x":0,"y":0},"i":{"x":1,"y":1},"s":[100],"t":1},{"s":[0],"t":60},{"s":[0],"t":61}]}},"shapes":[{"ty":"sh","bm":0,"hd":false,"nm":"","d":1,"ks":{"a":0,"k":{"c":true,"i":[[0,-0.01],[0,0],[0.01,0],[0,0],[0,0.01],[0,0],[-0.01,0],[0,0]],"o":[[0,0],[0,0.01],[0,0],[-0.01,0],[0,0],[0,-0.01],[0,0],[0.01,0]],"v":[[229.73,0.01],[229.73,4.98],[229.72,4.99],[0.01,4.99],[0,4.98],[0,0.01],[0.01,0],[229.72,0]]}}},{"ty":"fl","bm":0,"hd":false,"nm":"","c":{"a":0,"k":[1,1,1]},"r":1,"o":{"a":0,"k":100}}],"ind":5},{"ty":4,"nm":"Rectangle 3","sr":1,"st":0,"op":121,"ip":0,"hd":false,"ddd":0,"bm":0,"hasMask":false,"ao":0,"ks":{"a":{"a":1,"k":[{"o":{"x":0,"y":0},"i":{"x":1,"y":1},"s":[189.78,12.49],"t":0},{"o":{"x":0,"y":0},"i":{"x":1,"y":1},"s":[189.78,12.49],"t":1},{"o":{"x":0,"y":0},"i":{"x":1,"y":1},"s":[189.78,12.49],"t":60},{"o":{"x":0,"y":0},"i":{"x":1,"y":1},"s":[189.78,12.49],"t":61},{"s":[43,12.5],"t":118},{"s":[43,12.5],"t":119},{"s":[43,12.5],"t":120}]},"s":{"a":0,"k":[100,100]},"sk":{"a":0,"k":0},"p":{"a":1,"k":[{"o":{"x":0,"y":0},"i":{"x":1,"y":1},"s":[191.53,24.22],"t":0},{"o":{"x":0,"y":0},"i":{"x":1,"y":1},"s":[191.53,24.22],"t":1},{"o":{"x":0,"y":0},"i":{"x":1,"y":1},"s":[191.53,24.22],"t":60},{"o":{"x":0,"y":0},"i":{"x":1,"y":1},"s":[191.53,24.22],"t":61},{"s":[191.53,26.35],"t":118},{"s":[191.53,26.35],"t":119},{"s":[191.53,26.35],"t":120}]},"r":{"a":0,"k":0},"sa":{"a":0,"k":0},"o":{"a":0,"k":100}},"shapes":[{"ty":"sh","bm":0,"hd":false,"nm":"","d":1,"ks":{"a":1,"k":[{"o":{"x":0,"y":0},"i":{"x":1,"y":1},"s":[{"c":true,"i":[[0,-5.925397592265276],[0,0],[6.826539312729381,0],[0,0],[0,5.925397592265276],[0,0],[-6.826539312729381,0],[0,0]],"o":[[0,0],[0,5.925397592265276],[0,0],[-6.826539312729381,0],[0,0],[0,-5.925397592265276],[0,0],[6.826539312729381,0]],"v":[[376.06404376481333,10.741395635325588],[376.06404376481333,10.741395635325588],[363.689083530272,21.47419127414571],[12.37496023454136,21.47419127414571],[0,10.741395635325588],[0,10.741395635325588],[12.37496023454136,0],[363.689083530272,0]]}],"t":0},{"o":{"x":0,"y":0},"i":{"x":1,"y":1},"s":[{"c":true,"i":[[0,-5.925397592265276],[0,0],[6.826539312729381,0],[0,0],[0,5.925397592265276],[0,0],[-6.826539312729381,0],[0,0]],"o":[[0,0],[0,5.925397592265276],[0,0],[-6.826539312729381,0],[0,0],[0,-5.925397592265276],[0,0],[6.826539312729381,0]],"v":[[376.06404376481333,10.741395635325588],[376.06404376481333,10.741395635325588],[363.689083530272,21.47419127414571],[12.37496023454136,21.47419127414571],[0,10.741395635325588],[0,10.741395635325588],[12.37496023454136,0],[363.689083530272,0]]}],"t":1},{"o":{"x":0,"y":0},"i":{"x":1,"y":1},"s":[{"c":true,"i":[[0,-5.925397592265276],[0,0],[6.826539312729381,0],[0,0],[0,5.925397592265276],[0,0],[-6.826539312729381,0],[0,0]],"o":[[0,0],[0,5.925397592265276],[0,0],[-6.826539312729381,0],[0,0],[0,-5.925397592265276],[0,0],[6.826539312729381,0]],"v":[[376.06404376481333,10.741395635325588],[376.06404376481333,10.741395635325588],[363.689083530272,21.47419127414571],[12.37496023454136,21.47419127414571],[0,10.741395635325588],[0,10.741395635325588],[12.37496023454136,0],[363.689083530272,0]]}],"t":60},{"o":{"x":0,"y":0},"i":{"x":1,"y":1},"s":[{"c":true,"i":[[0,-5.925397592265276],[0,0],[6.826539312729381,0],[0,0],[0,5.925397592265276],[0,0],[-6.826539312729381,0],[0,0]],"o":[[0,0],[0,5.925397592265276],[0,0],[-6.826539312729381,0],[0,0],[0,-5.925397592265276],[0,0],[6.826539312729381,0]],"v":[[376.06404376481333,10.741395635325588],[376.06404376481333,10.741395635325588],[363.689083530272,21.47419127414571],[12.37496023454136,21.47419127414571],[0,10.741395635325588],[0,10.741395635325588],[12.37496023454136,0],[363.689083530272,0]]}],"t":61},{"s":[{"c":true,"i":[[0,-5.9351274118423465],[0,0],[6.61951378251231,0],[0,0],[0,5.9351274118423465],[0,0],[-6.61951378251231,0],[0,0]],"o":[[0,0],[0,5.9351274118423465],[0,0],[-6.61951378251231,0],[0,0],[0,-5.9351274118423465],[0,0],[6.61951378251231,0]],"v":[[82.50408482551575,10.752042412757874],[82.50408482551575,10.752042412757874],[70.51221203110939,21.504084825515747],[11.991872794406358,21.504084825515747],[0,10.752042412757874],[0,10.752042412757874],[11.991872794406358,0],[70.51221203110939,0]]}],"t":118},{"s":[{"c":true,"i":[[0,-5.9351274118423465],[0,0],[6.61951378251231,0],[0,0],[0,5.9351274118423465],[0,0],[-6.61951378251231,0],[0,0]],"o":[[0,0],[0,5.9351274118423465],[0,0],[-6.61951378251231,0],[0,0],[0,-5.9351274118423465],[0,0],[6.61951378251231,0]],"v":[[82.50408482551575,10.752042412757874],[82.50408482551575,10.752042412757874],[70.51221203110939,21.504084825515747],[11.991872794406358,21.504084825515747],[0,10.752042412757874],[0,10.752042412757874],[11.991872794406358,0],[70.51221203110939,0]]}],"t":119},{"s":[{"c":true,"i":[[0,-5.9351274118423465],[0,0],[6.61951378251231,0],[0,0],[0,5.9351274118423465],[0,0],[-6.61951378251231,0],[0,0]],"o":[[0,0],[0,5.9351274118423465],[0,0],[-6.61951378251231,0],[0,0],[0,-5.9351274118423465],[0,0],[6.61951378251231,0]],"v":[[82.50408482551575,10.752042412757874],[82.50408482551575,10.752042412757874],[70.51221203110939,21.504084825515747],[11.991872794406358,21.504084825515747],[0,10.752042412757874],[0,10.752042412757874],[11.991872794406358,0],[70.51221203110939,0]]}],"t":120}]}},{"ty":"st","bm":0,"hd":false,"nm":"","lc":1,"lj":1,"ml":4,"o":{"a":0,"k":100},"w":{"a":1,"k":[{"o":{"x":0,"y":0},"i":{"x":1,"y":1},"s":[3.495915174484253],"t":0},{"o":{"x":0,"y":0},"i":{"x":1,"y":1},"s":[3.495915174484253],"t":1},{"o":{"x":0,"y":0},"i":{"x":1,"y":1},"s":[3.495915174484253],"t":60},{"o":{"x":0,"y":0},"i":{"x":1,"y":1},"s":[3.495915174484253],"t":61},{"s":[3.495915174484253],"t":118},{"s":[3.495915174484253],"t":119},{"s":[3.495915174484253],"t":120}]},"c":{"a":0,"k":[0.2824,0.4589,0.1726]}}],"ind":6}],"v":"5.7.0","fr":60,"op":120,"ip":0,"assets":[],"markers":[{"cm":"property_1default","tm":0,"dr":1},{"cm":"property_1variant2","tm":60,"dr":1},{"cm":"property_1variant3","tm":118,"dr":1}]};
+</script>
+
+<!-- FLOATING POPUP CHAT -->
+<div id="chat-popup">
+  <div class="popup-header">
+    <div class="popup-header-left">
+      <div class="popup-hat-icon">
+        <svg width="32" height="14" viewBox="0 0 85 35" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <circle cx="62.5" cy="32.5" r="2.5" fill="#9dc47a"/>
+          <circle cx="22.5" cy="12.5" r="2.5" fill="#9dc47a"/>
+          <rect x="1.75" y="1.75" width="81.5" height="21.5" rx="10.75" stroke="#9dc47a" stroke-width="3.5"/>
+        </svg>
+      </div>
+      <div>
+        <div class="popup-title">Ask Emre</div>
+        <div class="popup-subtitle">AI · responds instantly</div>
+      </div>
+    </div>
+    <button class="popup-close" onclick="closePopup()">×</button>
+  </div>
+  <div class="popup-api-bar" id="popup-api-bar">
+    <label>API KEY</label>
+    <input type="password" id="popup-api-input" placeholder="sk-ant-..." autocomplete="off" onkeydown="if(event.key==='Enter')savePopupKey()">
+    <button onclick="savePopupKey()">Save</button>
+  </div>
+  <div class="popup-api-saved" id="popup-api-saved">⚡ Active</div>
+  <div class="popup-msgs" id="popup-msgs">
+    <div class="popup-msg ai">
+      <div class="popup-msg-av">ED</div>
+      <div class="popup-msg-bub"><p>Hi! I'm an AI built on Emre's full story. Ask me anything about his work, process, or background.</p></div>
+    </div>
+  </div>
+  <div class="popup-input-bar">
+    <input type="text" id="popup-input" placeholder="Ask anything…" onkeydown="if(event.key==='Enter')sendPopupMsg()">
+    <button class="popup-send" id="popup-send" onclick="sendPopupMsg()">→</button>
+  </div>
+</div>
+
+</body>
+</html>
